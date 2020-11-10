@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel="shortcut icon" type="image/x-icon" href=" source/image/tjz.png">
+	<title>旅行箱</title>
+
+<!--
+	<script type="text/javascript" src="demo/js/index.js"></script>
+	<link rel="stylesheet" href="demo/css/index.css">
+-->
+	<style type="text/css">
+		/*a{text-decoration:none}*/
+		a { color:black; transition:2s; text-decoration: none;}
+		a:hover { color:#9400D3;}
+		.row{
+			font-family:"Arial";
+			border: 1px solid black;
+		}
+		[class*="col-"]{
+			border: 1px solid black;
+			padding: 10px 10px 0 0;
+			background-color: #eee;
+		}
+
+				body {
+            position: relative;
+            left: 0;
+            padding: 0;
+            margin: 0;
+            /*overflow-x:hidden;*/
+        }
+        
+        aside {
+            width: 300px;
+            height: 700px;
+            position: fixed;
+            left: 5px;
+            top: 86px;
+            background: #d4d4d4;
+            transition: right 2s ease;
+        }
+
+        #aside0{
+        	
+            width: 120px;
+            height: 0.001px;
+            position: fixed;
+            right: 5px;
+            top: -25px;
+            background: #d4d4d4;
+            transition: right 2s ease;
+            z-index: 2;
+        }
+        
+        .open {
+            right: 0px;
+        }
+        
+        .close {
+            right: -300px;
+        }
+
+	</style>
+</head>
+<body style="background:url(source/image/aside1.jpeg);opacity: 0.9;">
+
+	
+	<div class="col-md-3"style="margin-top: 45px; opacity: 0.8;height:650px;width:80%;margin-left:10%;font-size: 20px;border-radius: 20px">
+        时间:<input id="time" type="" name=""> 
+        地点:<input id="location" type="" name="">
+        出行人数:<input id="population" type="" name="">
+        天气预报:<input id="weather" type="" name="">
+        出行时长:<input id="last_time" type="" name="">
+        出行目的:<input id="target" style="width: 90.2%" type="" name="">
+        <br>
+
+        出行方式:
+        <select style="">
+             <option value ="train">火车</option>
+             <option value ="subway">高铁</option>
+             <option value ="air">航空</option>
+             <option value="ocean">船</option>
+             <option value="bus">大巴车</option>
+             <option value="walk">步行</option>
+             <option value="">自驾游</option>
+        </select>
+        预算:<input placeholder="区间" id="note"type="" name="" style="width: 10%">
+        备注:<input id="note"type="" name="" style="width: 64.9%">
+        <br>
+        ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        <br>
+        行李:&nbsp&nbsp&nbspcarry-on luggage<input type="checkbox" name="">大箱包<input type="checkbox" name="">书包<input type="checkbox" name="">手提袋<input type="checkbox" name="">单肩包<input type="checkbox" name="">公文包<input type="checkbox" name="">&nbsp其他:<input id="clothing" type="" name=""><br>
+        备用衣物:&nbsp&nbsp&nbsp皮带<input type="checkbox" name=""> 内衣裤<input type="checkbox" name=""> 袜子<input type="checkbox" name=""> 手套 <input type="checkbox" name="">帽子<input type="checkbox" name=""> 围巾<input type="checkbox" name=""> 挎包 <input type="checkbox" name="">&nbsp其他:<input id="clothing" type="" name=""><br>
+        饰品:&nbsp&nbsp&nbsp墨镜<input type="checkbox" name=""> 手串<input type="checkbox" name=""> 手表<input type="checkbox" name=""> 项链<input type="checkbox" name="">戒指<input type="checkbox" name="">耳环<input type="checkbox" name="">&nbsp其他:<input id="others" type="" name=""><br>
+        电子用具:&nbsp&nbsp&nbsp充电宝<input type="checkbox" name="">耳机<input type="checkbox" name="">数据线<input type="checkbox" name="">平板电脑<input type="checkbox" name="">笔记本电脑<input type="checkbox" name="">手机<input type="checkbox" name="">&nbsp其他:<input id="electric" type="" name=""><br>
+        医药:&nbsp&nbsp&nbsp眼药水<input type="checkbox" name="">创口贴<input type="checkbox" name="">防嗮霜<input type="checkbox" name="">口罩<input type="checkbox" name="">清新剂<input type="checkbox" name="">止血剂<input type="checkbox" name="">&nbsp其他:<input id="electric" type="" name=""><br>
+        生活用品:&nbsp&nbsp&nbsp水杯<input type="checkbox" name="">钢笔<input type="checkbox" name="">雨伞<input type="checkbox" name="">雨衣<input type="checkbox" name="">望远镜<input type="checkbox" name="">刀<input type="checkbox" name="">&nbsp其他:<input id="electric" type="" name=""><br>
+        随身携带:&nbsp&nbsp&nbsp&nbsp其他:钱包<input type="checkbox" name="">证件<input type="checkbox" name="">名片<input type="checkbox" name="">&nbsp其他:<input id="electric" type="" name=""><br>
+        食品:&nbsp&nbsp&nbsp&nbsp其他:<input id="electric" type="" name=""><br>
+        ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        <br>
+        
+        <br>
+        <textarea placeholder="草稿区:" type="text"style="border-radius: 5px;height: 200px;width: 100%" name=""></textarea> 
+        
+        <button style="float: right;margin-top: 25px" onclick="printer()">打印</button>
+    </div>
+	<a href="/Users/zhangtingjia/Desktop/tingjia.html"  target="_self">《</a>
+
+</body>
+<script type="text/javascript">
+    function printer(){
+        window.print();
+    }
+
+</script>
+</html>

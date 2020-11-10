@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" type="image/x-icon" href="demo/source/image/tjz.png">
+    <title>爱雪之家</title>
+    <!--
+    <script type="text/javascript" src="demo/js/index.js"></script>
+    <link rel="stylesheet" href="demo/css/index.css">
+-->
+    <style type="text/css">
+    /*黑白滤镜功能:
+        html {
+            filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
+            -webkit-filter: grayscale(100%);
+        }
+        */
+    #video {
+        /*position:fixed;*/
+        right: 0;
+        bottom: 0;
+        min-width: 100%;
+        min-height: 100%;
+        width: 800px;
+        height: auto;
+        z-index: -1;
+
+    }
+
+    a {
+        cursor: wait;
+        text-decoration: none;
+        color: #8B0000;
+        transition: 1.5s;
+    }
+
+    a:hover {
+        color: #0000FF;
+    }
+
+    .row {
+        font-family: "Arial";
+        /*
+            border: 1px solid black;
+            */
+    }
+
+    [class*="col-"] {
+
+        /**
+            border: 1px solid black;
+        **/
+        padding: 10px 10px 0 0;
+        background-color: #eee;
+    }
+
+    body {
+        position: relative;
+        left: 0;
+        padding: 0;
+        margin: 0;
+        /*overflow-x:hidden;*/
+    }
+
+    #aside0 {
+        /* 首页页面切换,再界面右上角,12345.*/
+        width: 120px;
+        height: 0.001px;
+        position: fixed;
+        right: 5px;
+        top: 0px;
+        background: #d4d4d4;
+        transition: right 2s ease;
+        z-index: 2;
+    }
+
+    #aside00 {
+        /* 右侧功能模块点击“x”后出现“《”的界面,而“《”则放在aside00里面*/
+        width: 0.01px;
+        height: 0.01px;
+        position: fixed;
+        right: 5px;
+        top: 86px;
+        background: #d4d4d4;
+        transition: right 2s ease;
+        z-index: 2;
+    }
+
+    #aside01 {
+        /*达尔文天平和“x”关闭所在的div*/
+        border-radius: 100px;
+        width: 150px;
+        height: 150px;
+        position: fixed;
+        right: 5px;
+        top: 86px;
+        background: #d4d4d4;
+        transition: right 2s ease;
+        z-index: 2;
+    }
+
+    #aside02 {
+        /*行李管家*/
+        border-radius: 100px;
+        width: 150px;
+        height: 150px;
+        position: fixed;
+        right: 25px;
+        top: 250px;
+        background: #d4d4d4;
+        transition: right 2s ease;
+        z-index: 2;
+    }
+
+    #aside03 {
+        /*daily流程*/
+        border-radius: 100px;
+        width: 150px;
+        height: 150px;
+        position: fixed;
+        right: 5px;
+        top: 450px;
+        background: #d4d4d4;
+        transition: right 2s ease;
+        z-index: 2;
+    }
+
+    #aside04 {
+        /*首页最常用网站栏目*/
+        border-radius: 100px;
+        width: 80%;
+        height: 100px;
+        position: absolute;
+        /* 绝对位置保证该div固定在第一页,改为fixed会随着翻页而翻页*/
+        left: 10%;
+        top: 50px;
+        background: #d4d4d4;
+        transition: right 2s ease;
+        z-index: 2;
+    }
+
+    #aside05 {
+        /*百度一下网站截选*/
+        border-radius: 100px;
+        width: 80%;
+        height: 300px;
+        position: absolute;
+        /* 绝对位置保证该div固定在第一页,改为fixed会随着翻页而翻页*/
+        left: 5%;
+        top: 250px;
+        background: #d4d4d4;
+        transition: right 2s ease;
+        z-index: 2;
+    }
+
+
+    #aside1 {
+        /*左侧待开发栏目,现在是隐藏的,通过点击“schedule”按钮打开*/
+        border-radius: 100px;
+        width: 100px;
+        height: 100px;
+        position: fixed;
+        left: 5px;
+        top: 86px;
+        background: #d4d4d4;
+        transition: right 2s ease;
+    }
+
+    #aside2 {
+        /*左侧待开发栏目,现在是隐藏的,通过点击“schedule”按钮打开*/
+        border-radius: 100px;
+        width: 100px;
+        height: 100px;
+        position: fixed;
+        left: 5px;
+        top: 200px;
+        background: #d4d4d4;
+        transition: right 2s ease;
+    }
+
+    #aside3 {
+        border-radius: 50px;
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        left: 5px;
+        top: 50px;
+        background: #d4d4d4;
+        transition: right 2s ease;
+    }
+
+    #iframe1 {
+        /*"hot tips"按钮所在界面*/
+        border-radius: 20px;
+        position: fixed;
+        left: 300px;
+        top: 50px;
+        background: #d4d4d4;
+        transition: right 2s ease;
+    }
+
+    .open {
+        right: 0px;
+    }
+
+    .close {
+        right: -500px;
+    }
+    </style>
+</head>
+
+<body>
+    <!--
+<iframe src="https://www.baidu.com/"scrolling="none "frameborder="1"width="1000"height="300">
+  
+</iframe>
+ -->
+    <!--<audio controls src="data/1.mp3"></audio>-->
+    <!--<button id="btn" value="play">播放</button>-->
+    <div class="row" id="part0" style="background:url(demo/source/image/bg.jpeg);background-size: 100%; background-repeat:no-repeat;height:800px;background-color: white;">
+        <video controls="true" id="video" muted src="demo/source/video/你的名字.mp4" autoplay loop>您的浏览器不支持\&lt; video&gt;元素</video>
+    </div>
+    <div id="part1" style="background:url(demo/source/image/black1.jpg);background-size: 100%;background-repeat:no-repeat;height: 800px;">
+        <div class="box" style="    border: none; height: 75px;cursor: default;">
+            <div class="row">
+                <div id="tenth_page" class="col-md-3" style="background-color:#696969;height: 30px;opacity: 0.9;">
+                    <input type="button" style="cursor: pointer; background-color:  #F0FFF0;float: left;border-bottom-left-radius:6px;border-top-left-radius:6px;" id="start" name="" value="播放">
+                    <input type="button" style="cursor: pointer;background-color:   #F5F5DC;float: left;" id="pause" name="" value="暂停">
+                    <input type="button" style="cursor: pointer;background-color:   #EEE8AA;float: left;" id="started" name="" value="继续">
+                    <input type="button" style="cursor: pointer;background-color:   #FFFFF0;float: left;" id="previous" name="" value="上一首">
+                    <input type="button" style="cursor: pointer;background-color:   #FAFAD2;float: left;" id="next" name="" value="下一首">
+                    <input type="button" style="cursor: pointer;background-color:   #FFFFE0;float: left;" id="silence" name="" value="静音">
+                    <input type="button" style="cursor: pointer;background-color:   #EEE8AA;float: left;" id="random" name="" value="随机">
+                    <input type="button" style="cursor: pointer;background-color:   #FFFACD;float: left;border-bottom-right-radius:6px;border-top-right-radius:6px;" id="double" name="" value="两倍数">
+                    <input type="button" style="float:right;border-bottom-left-radius:6px;border-top-left-radius:6px;border-bottom-right-radius:6px;border-top-right-radius:6px;margin-right: 5px;background-color:#00CED1;cursor: pointer;" id="bgchange8" name="" value="">
+                    <input type="button" style="float:right;border-bottom-left-radius:6px;border-top-left-radius:6px;border-bottom-right-radius:6px;border-top-right-radius:6px;margin-right: 5px; background-color:#87CEEB;cursor: pointer;" id="bgchange2" name="" value="">
+                    <input type="button" style="float:right;border-bottom-left-radius:6px;border-top-left-radius:6px;border-bottom-right-radius:6px;border-top-right-radius:6px;margin-right: 5px; background-color:#00BFFF;cursor: pointer;" id="bgchange3" name="" value="">
+                    <input type="button" style="float:right;border-bottom-left-radius:6px;border-top-left-radius:6px;border-bottom-right-radius:6px;border-top-right-radius:6px;margin-right: 5px; background-color:#ADD8E6;cursor: pointer;" id="bgchange4" name="" value="">
+                    <input type="button" style="float:right;border-bottom-left-radius:6px;border-top-left-radius:6px;border-bottom-right-radius:6px;border-top-right-radius:6px;margin-right: 5px; background-color:#00FFFF;cursor: pointer;" id="bgchange5" name="" value="">
+                    <input type="button" style="float:right;border-bottom-left-radius:6px;border-top-left-radius:6px;border-bottom-right-radius:6px;border-top-right-radius:6px;margin-right: 5px; background-color:#E6E6FA;cursor: pointer;" id="bgchange6" name="" value="">
+                    <input type="button" style="float:right;border-bottom-left-radius:6px;border-top-left-radius:6px;border-bottom-right-radius:6px;border-top-right-radius:6px;margin-right: 5px; background-color:#E6E6FC;cursor: pointer;" id="bgchange7" name="" value="">
+                    <input type="button" style="float:right;border-bottom-left-radius:6px;border-top-left-radius:6px;border-bottom-right-radius:6px;border-top-right-radius:6px;margin-right: 5px; background-color:#E6E5FC;cursor: pointer;" id="bgchange1" name="" value="">
+                    <input type="button" style="float:right;border-bottom-left-radius:6px;border-top-left-radius:6px;border-bottom-right-radius:6px;border-top-right-radius:6px;margin-right: 5px; background-color:#E6E5FC;cursor: pointer;" id="bgchange9" name="" value="">
+                    <div id="datetime" style="margin-left:700px;color: #FFDEAD;">
+                        <script>
+                        setInterval("document.getElementById('datetime').innerHTML=new Date().toLocaleString();", 1000);
+                        </script>
+                    </div>
+                    <!-- 
+                <a href="#button"style = "float: right;">
+                    跳转底部
+                </a>
+                -->
+                </div>
+                <div id="eleventh_page" class="col-md-3" style="height:30px;border: none; background-color:#696969;opacity: 0.8;">
+                    <div id="current" style="float: left;color: #FFDEAD"></div>
+                    <div id="duration" style="float:left;margin-left:220px;color: #FFDEAD"></div>
+                    <a style="margin-left: 480px;" href="#part0">0</a>
+                    <a href="#part1">1</a>
+                    <a href="#part2">2</a>
+                    <a href="#part3">3</a>
+                    <a href="#part4">4</a>
+                    <a href="#part5">5</a>
+                    <button title="最近的重大安排" onclick="toggle()" style="border-bottom-left-radius:6px;border-top-left-radius:6px;border-bottom-right-radius:6px;border-top-right-radius:6px;background-color:#FFF0F5;float: right" id="btn1">
+                        schedule
+                    </button>
+                    <button title="最近的重大安排" onclick="sakura()" style="border-bottom-left-radius:6px;border-top-left-radius:6px;border-bottom-right-radius:6px;border-top-right-radius:6px;background-color:#FFC0CB;float: right" id="btn1">
+                        sakura
+                    </button>
+                    <button title="只展示背景图片" onclick="clean()" style="margin-right:3px; border-bottom-left-radius:6px;border-top-left-radius:6px;border-bottom-right-radius:6px;border-top-right-radius:6px;background-color: #FFB6C1;float: right" id="btn2">
+                        clean model
+                    </button>
+                    <button title="热点链接" onclick="hot()" style="margin-right:3px; border-bottom-left-radius:6px;border-top-left-radius:6px;border-bottom-right-radius:6px;border-top-right-radius:6px;background-color:#DB7093;float: right" id="btn3">hot tips</button>
+                </div>
+                <!--
+                改变按钮边框的css语法如下：
+                border-bottom-left-radius:6px;border-top-left-radius:6px;border-bottom-right-radius:6px;border-top-right-radius:6px;
+            -->
+            </div>
+        </div>
+        <div class="row" style="border: none; margin-top:5px;height:700px;cursor: 
+
+
+    ;">
+            <iframe id="iframe1" src="/Users/zhangtingjia/Desktop/demo/status.html" width="800" height="600" style="display:none;margin:0 auto">
+            </iframe>
+            <div id="first_page" class="col-md-3" style="opacity: 0.5;height:90px;font-size: 20px;">
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://v.qq.com/">腾讯视频</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://www.huya.com/">虎牙直播</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://www.jd.com/">京东</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://www.baidu.com/">百度</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://www.zhihu.com/#signin">知乎</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://mail.qq.com/cgi-bin/frame_html?sid=sINrfBhIB8DlDWE8&r=9228e9c529e7101eaec4ff8206a065e5">qq邮箱</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://pan.baidu.com/disk/home?errno=0&errmsg=Auth%20Login%20Sucess&&bduss=&ssnerror=0&traceid=#/all?path=%2F&vmode=list">百度网盘</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="http://www.youdao.com/">翻译</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://www.bilibili.com/anime/?spm_id_from=333.334.b_7072696d6172795f6d656e75.8">bilibili</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://www.acfun.cn/v/list155/index.htm">AcFun</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://study.koolearn.com/my">GRE</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://outlook.office365.com/mail/inbox">Outlook</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="http://sem.tanzhoujiaoyu.com/sheji/youxi/max/7/?b_scene_zt=1">3DMAX</a>
+                </div>
+                <div id="top" style="width: 100px;float: right;font-size: 25px;color:red">
+                    经常使用
+                </div>
+            </div>
+            <div id="second_page" class="col-md-3" style="opacity: 0.7;height:90px;font-size: 20px">
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://www.imooc.com/u/index/szcourses/list">慕课网</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://www.cdstm.cn/">中国数字科技馆</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="http://www.dxzy163.com/">大学资源网</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://huke88.com/">虎课网</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://www.51zxw.net/list.aspx?cid=768">我要自习网</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="http://open.nlc.cn/onlineedu/client/index.htm">国图公开课</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="http://www.1ketang.com/">壹课堂</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://www.php.cn/">php中文网</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://www.doityourself.com/">doityourself</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="http://www.diyijc.com/">第一教程网</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://search.muz.li/">Search</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://www.microsoft.com/zh-cn/tips/home">microsoft技巧</a>
+                </div>
+                <div style="width: 100px;float: right;font-size: 25px;color:red">
+                    网课资源
+                </div>
+            </div>
+            <div id="third_page" class="col-md-3" style="opacity: 0.5;height:90px;font-size: 20px">
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://www.cdstm.cn/">maspeak</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://www.mvyxws.com/">医学微视</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://zh.wikihow.com/%E9%A6%96%E9%A1%B5">wikihow</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://www.ehow.com/">ehow</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://www.asklib.com/">问答库</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://www.msdmanuals.com/zh/">默沙东诊疗手册</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://www.allhistory.com/">历史时空轴</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://www.ruhe8.com/">如何8</a>
+                </div>
+                <div style="width: 100px;float: right;font-size: 25px;color:red">
+                    生活常识
+                </div>
+            </div>
+            <div id="fourth_page" class="col-md-3" style="opacity: 0.7;height:90px;font-size: 20px">
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://dh.woshipm.com/#section-1">运营导航</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://idesign.qq.com/#!index/feed">设计导航</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="http://hao.199it.com/">大数据导航</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://tophub.today/">今日热榜</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="http://www.world68.com/">各国网址大全</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://www.cn-ki.net/">iData</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://lpl.qq.com/">lol赛事</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="http://datav.aliyun.com/tools/atlas/#&lat=31.769817845138945&lng=104.29901249999999&zoom=3">中国地图数据</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://gitmind.cn/">思维流程图</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="http://www.jiandati.com/">简答题</a>
+                </div>
+                <div style="width: 100px;float: right;font-size: 25px;color:red">
+                    数据挖掘
+                </div>
+            </div>
+            <div id="fifth_page" class="col-md-3" style="opacity: 0.5;height:90px;font-size: 20px">
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://smallpdf.com/">文件格式转换</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://www.zitijia.com/">字体与弹幕制作</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://www.remove.bg/">在线抠图</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://panzoid.com/">视频开头制作</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://wall.alphacoders.com/?lang=Chinese">壁纸2</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://chartify.io/">图表表格</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="http://www.aigei.com/">声音素材</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://github.com/">Github</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="http://www.pptbz.com/">ppt宝藏</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://ps.gaoding.com/#/?hmsr=zc-cc">在线ps</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://www.sioe.cn/yingyong/yanse-rgb-16/">颜色代码</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://edu.jiatuxueyuan.com/">plc</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://www.canva.cn/templates/">Canva</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://ebook.huzerui.com/#/">熊猫搜书</a>
+                </div>
+                <div style="margin-top:-30px; width: 100px;float: right;font-size: 25px;color:red">
+                    一些工具
+                </div>
+            </div>
+            <div id="sixth_page" class="col-md-3" style="opacity: 0.7;height:90px;font-size: 20px">
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://www.maxreader.net/read/HuanYingLaiDaoShiLiZhiShangZhuYiDeJiaoShi/">实教</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://read.douban.com/column/32488978/">天下刀宗2</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://www.manhuadb.com/manhua/1061">碧蓝之海漫画</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://www.qidian.com/">起点中文网</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="http://book.qq.com/">腾讯阅读</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://read.douban.com/">豆瓣阅读</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://yz.lol.qq.com/zh_CN/">联盟宇宙</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="http://book.suixw.com/modules/article/reader.php?aid=885">樱花庄的宠物女孩</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://read.douban.com/reader/column/32079294/chapter/119566177/">天下刀宗</a>
+                </div>
+                <div style="width: 100px;float: right;font-size: 25px;color:red">
+                    追的小说
+                </div>
+            </div>
+            <div id="seventh_page" class="col-md-3" style="margin-top: 85px; color:#FFFAFA;background-color:#696969;opacity: 0.8;height:25px;font-size: 20px">关注的贴吧</div>
+            <div id="eighth_page" class="col-md-3" style="color:#FFFAFA;background-color:#696969;opacity: 0.9;height:25px;font-size: 20px">等待添加...</div>
+            <!--
+                <div class="col-md-3">
+                版本：1.1.3 ———————————— 7/16/2019 更新功能：字体调整，版面调整
+                版本：1.1.4 ———————————— 8/11/2019 新增功能：图层透明，选取变色，时间系统，第二页面
+                版本：1.1.5——————————————8/26/2019 新增功能：背景图片更换，
+                版本：1.1.6——————————————9/10/2019 新增功能：纯净模式，日程安排以及关闭第二页
+                版本：1.1.7——————————————9/26/2019 新增功能：正数计时和倒数计时器
+                版本：1.1.8——————————————4/14/2020 删除部分功能使得页面更整洁
+                版本：1.1.9---------------5/30/2020 增加:首页动态视频循环播放
+                版本：1.1.10---------------6/16/2020 增加:达尔文天平,行李管家以及daily三个功能板块.
+                </div>
+            -->
+            <div id="nineth_page" class="col-md-3" style="color:#FFFAFA;background-color:#696969;opacity: 0.8;height:25px;font-size: 20px">
+                版本：1.1.11---------------8/16/2020 添加更多功能网站,储存在备胎选项中.
+                <button title="关闭附页" onclick="close_second()" style="margin-right:3px; border-bottom-left-radius:6px;border-top-left-radius:6px;border-bottom-right-radius:6px;border-top-right-radius:6px;background-color: #6495ED;float: right" id="btn3">
+                    x
+                </button>
+                <button title="打开附页" onclick="open_second()" style="margin-right:3px; border-bottom-left-radius:6px;border-top-left-radius:6px;border-bottom-right-radius:6px;border-top-right-radius:6px;background-color: #B0C4DE;float: right" id="btn3">
+                    ^
+                </button>
+            </div>
+        </div>
+        <aside id="aside0" style="font-size: 25px; opacity: 0.1;background:url( demo/source/image/aside1.jpeg);opacity: 0.9;">
+            <a href="#part0" style="color: blue">0</a>
+            <a href="#part1">1</a>
+            <a href="#part2" style="color: yellow">2</a>
+            <a href="#part3" style="color: pink">3</a>
+            <a href="#part4" style="color: green">4</a>
+            <a href="#part5" style="margin-right: 10px ;color:white">5</a>
+        </aside>
+        <aside id="aside00" style="opacity: 0.1;background:url( demo/source/image/aside1.jpeg);opacity: 0.9;">
+            <button id="show_first" onclick="show_first_page()" style="display: none; border-bottom-right-radius:6px;border-top-right-radius:6px;border-bottom-left-radius:6px;border-top-left-radius:6px;opacity: 0.5; float: right;background-color: #00FFFF">《
+            </button>
+        </aside>
+        <aside id="aside01" style="opacity: 0.1;background:url( demo/source/image/aside1.jpeg);opacity: 0.9;">
+            <div style="height: 20px;width: 150px;float: left;">
+                <button onclick="closer_first_page()" style="border-bottom-right-radius:10px;border-top-right-radius:10px;border-bottom-left-radius:10px;border-top-left-radius:10px;opacity: 0.5; float: right;background-color: #00FFFF">X</button>
+            </div>
+            <div style="height: 40px;width: 150px;float: left;">
+                <a href="/Users/zhangtingjia/Desktop/demo/daerwen.html" target="_blank"><img style="margin-left: 10px;margin-top: 35px" width="120" height="40" src="demo/source/image/daerwen.png" /></a>
+            </div>
+        </aside>
+        <aside id="aside02" style="opacity: 0.1;background:url( demo/source/image/aside1.jpeg);opacity: 0.9;">
+            <div style="height: 40px;width: 150px;float: left;">
+                <a href="/Users/zhangtingjia/Desktop/demo/luggage.html" target="_self"><img style="margin-left: 10px;margin-top: 50px" width="120" height="40" src="demo/source/image/xingli.png" /></a>
+            </div>
+        </aside>
+        <aside id="aside03" style="display: none; background:url( demo/source/image/aside1.jpeg);opacity: 0.9;">
+            <div style="height: 40px;width: 150px;float: left;">
+                <a href="/Users/zhangtingjia/Desktop/demo/daily.html" target="_self"><img style="margin-left: 15px;margin-top: 50px" width="120" height="40" src="demo/source/image/daily.png" /></a>
+            </div>
+        </aside>
+        <aside id="aside04" style="background:url( demo/source/image/aside1.jpeg);opacity: 0.5;">
+            <div style="height: 100%;width: 100%;float: left;font-size: 25px;">
+                <div style="width: 200px;float: left;margin-left: 50px">
+                    <a target="_blank" href="https://www.huya.com/">虎牙直播</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://www.jd.com/">京东</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://www.baidu.com/">百度</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://tophub.today/">今日热榜</a>
+                </div>
+                <div style="width: 200px;float: left;">
+                    <a target="_blank" href="https://www.deepl.com/translator">翻译</a>
+                </div>
+                <div style="width: 200px;float: left;margin-left: 50px;margin-top: 25px">
+                    <a target="_blank" href="https://www.bilibili.com/anime/?spm_id_from=333.334.b_7072696d6172795f6d656e75.8">bilibili</a>
+                </div>
+                <div style="width: 200px;float: left;margin-top: 25px">
+                    <a target="_blank" href="https://www.bilibili.com/video/BV16J411274J?from=search&seid=17988135549739600182">眼保健操</a>
+                </div>
+                <div style="width: 200px;float: left;margin-top: 25px">
+                    <a target="_blank" href="https://lpl.qq.com/">lol赛事</a>
+                </div>
+                <div style="width: 200px;float: left;margin-top: 25px">
+                    <a target="_blank" href="http://www.imomoe.in/">慌不择食系列</a>
+                </div>
+                <div style="width: 10px;float: right;margin-right: 10px;margin-top: -20px">
+                    <a target="_blank" style="color: blue;" onclick="close04()">x</a>
+                </div>
+            </div>
+            <aside id="aside05" style="display: none; background:url( demo/source/image/aside1.jpeg);opacity: 0.9;">
+                <button onclick="baidu()">百度一下</button>
+                <iframe id="baidu" src="https://www.baidu.com/" scrolling="none " frameborder="1" width="1000" height="300">
+                </iframe>
+            </aside>
+        </aside>
+        <aside id="aside3" style="opacity: 0.7;display:;background:url( demo/source/image/aside1.jpeg);">
+            <img onclick="switch_video()" style="margin-left: 5px;margin-top: 5px" width="40" height="40" src="demo/source/image/switch.png" />
+        </aside>
+        <aside id="aside1" style="opacity: 0.5;display:none;background:url( demo/source/image/aside1.jpeg);opacity: 0.9;">
+            <div style="height: 20px;width: 120px">
+                <button onclick="closer()" style="opacity: 0.5; float: right;background-color: #00FFFF">X</button>
+            </div>
+        </aside>
+        <aside id="aside2" style="opacity: 0.5; display: none; background:url( demo/source/image/aside1.jpeg);opacity: 0.9;">
+        </aside>
+        <div class="row" id="part2" style="z-index:1;background:url(demo/source/image/lol_kayle.jpg);background-size: 100%; background-repeat:no-repeat;height:800px;background-color: white;">
+            <div class="row" style="margin-top:90px;height:700px;cursor: default;font-size: 20px">
+                <div class="col-md-3 " style="color:#FF7F50;text-align:center;height:30px;background-color: black;">
+                    <a style="margin-left:-980px;" href="#part1">1</a>
+                    <a href="#part2">2</a>
+                    <a href="#part3">3</a>
+                    <a href="#part4">4</a>
+                    <a style="margin-right:100px;" href="#part5">5</a>
+                    有光的地方，黑暗如影随形～
+                </div>
+                <div class="colzz-md-3" style="opacity: 0.7;height:75px;">
+                    <div>
+                    </div>
+                </div>
+                <div id="fourth_page" class="col-md-3" style="margin-top: -75px;opacity: 0.5;height:100px;font-size: 20px">
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="http://web.airdroid.com/">手机录屏</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://www.pexels.com/">壁纸</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://www.fosshub.com/">Fosshub</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="http://bddn.cn/zb.htm">全国电视直播</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://www.cnblogs.com/hanqishihu/p/7048900.html">js常用的400特效</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="http://www.soopat.com/">专利搜索</a>
+                    </div>
+                    <div style="width: 100px;float: right;font-size: 25px;color: red">
+                        暂时不用
+                    </div>
+                </div>
+                <div id="fourth_page" class="col-md-3" style="overflow: scroll; opacity: 0.7;height:100px;font-size: 20px">
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://smallpd    f.com/">文件格式转换</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://lovelive.tools/">中二素材</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://8zt.cc/">冷笑话</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://www.examcoo.com/index/detail/mid/1/">无聊就做题</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://everytimezone.com/">世界时间</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="http://ai.baidu.com/">百度ai</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://www.zhihu.com/question/275351176/answer/827910373">书推荐</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://aidn.jp/mikutap/">降压</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="http://www.aigei.com/">多媒体素材</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://cn.ax101.xyz/category">MV</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="saucenao.com">看图搜人</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://www.youku.com/">优酷</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://www.liaoxuefeng.com/wiki/1252599548343744">廖雪峰</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="http://www.51yuansu.com/">PNG素材</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://www.iconfont.cn/">Icon-font</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://www.zcool.com.cn/discover/24!0!0!0!0!!!!2!-1!1">站酷设计</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="http://ppt.sotary.com/web/wxapp/index.html">ppt模版</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://jianwai.youdao.com/">网易见外</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://www.aconvert.com/pdf/">格式转换器</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://www.mygraphpaper.com/index.php?lang=zh-hans">纸张格式下载</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://xiezuocat.com/#/">文本修改</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="http://aimwriting.mtutor.engkoo.com/dashboard/evaluate">英语写作修改</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://www.fosshub.com/categories.html">app下载平台</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://letsview.com/zh/">手机投屏</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://maspeak.com/">语言学习</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://anvaka.github.io/city-roads/">城市线图生成</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="http://zhongguose.com/#meiguizi">中国传统颜色</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://www.17sucai.com/pins/tag/6584.html">网页特效</a>
+                    </div>
+                    <div style="margin-top: -60px; width: 100px;float: right;font-size: 25px;color: red">
+                        备胎选择
+                    </div>
+                </div>
+                <div id="fourth_page" class="col-md-3" style="opacity: 0.5;height:100px;font-size: 20px">
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://www.pixiv.net/">P站</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://www.urlgot.com/">视频搬运</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://www.expressvpn.com/support/troubleshooting/china-status/?utm_campaign=china_get_update_mac&utm_content=get_latest_app&utm_medium=apps&utm_source=rotating_message_v1&redir=www.qovcdbf.com&redir_t=db070369ccd82062984c1b5fd64ddf1c4a4e3d4d23fae44804a3f0a1791cda07#mac">ExpressVPN</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://www.videofk.com/">视频网址捕获</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://iceyun.top/user">冰云</a>
+                    </div>
+                    <div style="width: 100px;float: right;font-size: 25px;color:#696969">
+                        需要VPN
+                    </div>
+                </div>
+                <div id="fourth_page" class="col-md-3" style="opacity: 0.7;height:100px;font-size: 20px">
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="http://www.mjcm100.com/chengzhen/tesexiaozhen/2019-11-06/3043.html?from=singlemessage&isappinstalled=0#10006-weixin-1-52626-6b3bffd01fdde4900130bc5a2751b6d1">版权1</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://www.zhihu.com/question/27145069/answer/895588542?utm_source=wechat_session&utm_medium=social&utm_oi=825701790761775104">知乎1</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://www.zhihu.com/question/360861001/answer/941365361?utm_source=wechat_session&utm_medium=social&utm_oi=825701790761775104">知乎2</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://www.zhihu.com/question/313121547/answer/909675143?utm_source=wechat_session&utm_medium=social&utm_oi=825701790761775104">知乎3</a>
+                    </div>
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="https://www.zhihu.com/question/37777781/answer/928690771?from=singlemessage&isappinstalled=0&utm_medium=social&utm_oi=825701790761775104&utm_source=wechat_session&s_r=0">知乎4</a>
+                    </div>
+                    <div style="width: 100px;float: right;font-size: 25px;color: red">
+                        知乎看法
+                    </div>
+                </div>
+                <div id="fourth_page" class="col-md-3" style="opacity: 0.5;height:100px;font-size: 20px">
+                    <div style="width: 200px;float: left;">
+                        <a target="_blank" href="http://www.pc6.com/softview/softview_53260.html">SAI</a>
+                    </div>
+                    <div style="width: 100px;float: right;font-size: 25px;color: red">
+                        一些下载
+                    </div>
+                </div>
+                <div id="fourth_page" class="col-md-3" style="overflow: scroll;  opacity: 0.7;height:100px;font-size: 20px">
+                    <div style="width: 210px;float: left;">
+                        <a target="_blank" href="https://www.bilibili.com/bangumi/play/ep90830">齐木楠雄的灾难</a>
+                    </div>
+                    <div style="width: 210px;float: left;">
+                        <a target="_blank" href="https://www.bilibili.com/bangumi/play/ep259770">辉夜大小姐想让我告白</a>
+                    </div>
+                    <div style="width: 210px;float: left;">
+                        <a target="_blank" href="https://www.bilibili.com/bangumi/play/ep84340">某科学的超电磁炮</a>
+                    </div>
+                    <div style="width: 210px;float: left;">
+                        <a target="_blank" href="https://www.bilibili.com/bangumi/play/ep251076">青春...兔女郎学姐</a>
+                    </div>
+                    <div style="width: 210px;float: left;">
+                        <a target="_blank" href="https://www.bilibili.com/bangumi/play/ep266323">刀剑神域</a>
+                    </div>
+                    <div style="width: 210px;float: left;">
+                        <a target="_blank" href="https://www.bilibili.com/bangumi/play/ep234406">碧蓝之海</a>
+                    </div>
+                    <div style="width: 210px;float: left;">
+                        <a target="_blank" href="https://www.bilibili.com/bangumi/play/ss1172?from=search&seid=3746704920056719640">轻音少女</a>
+                    </div>
+                    <div style="width: 210px;float: left;">
+                        <a target="_blank" href="https://www.bilibili.com/bangumi/play/ep8338">恋爱研究所</a>
+                    </div>
+                    <div style="width: 210px;float: left;">
+                        <a target="_blank" href="https://www.bilibili.com/bangumi/play/ep113353">欢迎来到实力至上主义的教室</a>
+                    </div>
+                    <div style="width: 210px;float: left;">
+                        <a target="_blank" href="https://www.bilibili.com/bangumi/play/ep95840?from=search&seid=4059051657342749225">请问您今天要来点兔子吗</a>
+                    </div>
+                    <div style="width: 210px;float: left;">
+                        <a target="_blank" href="https://www.bilibili.com/bangumi/play/ep276680">女高中生的虚度日常</a>
+                    </div>
+                    <div style="width: 210px;float: left;">
+                        <a target="_blank" href="https://www.bilibili.com/bangumi/play/ep173286">紫罗兰永恒花园</a>
+                    </div>
+                    <div style="width: 210px;float: left;">
+                        <a target="_blank" href="https://www.bilibili.com/bangumi/play/ep102954">快把我哥带走</a>
+                    </div>
+                    <div style="width: 210px;float: left;">
+                        <a target="_blank" href="https://www.bilibili.com/bangumi/play/ss12044/?from=search&seid=7903268451359522246">你的名字</a>
+                    </div>
+                    <div style="width: 210px;float: left;">
+                        <a target="_blank" href="https://www.bilibili.com/bangumi/play/ss29590/?from=search&seid=13275042543813559809">re0</a>
+                    </div>
+                    <div style="width: 210px;float: left;">
+                        <a target="_blank" href="               https://v.youku.com/v_show/id_XMTQ0NDQ1NTE0OA==.html?spm=a2h0k.11417342.soresults.dselectbutton&s=2040dc8aa86c11e59e2a">为美好世界献上祝福</a>
+                    </div>
+                    <div style="margin-top: -80px; width: 100px;float: right;font-size: 25px;color: red">
+                        番剧直通
+                    </div>
+                </div>
+                <div id="nineth_page" class="col-md-3" style="margin-top:100px; color:#FFFAFA;background-color:#696969;opacity: 0.8;height:25px;font-size: 20px">
+                    <a style="" href="#part1">1</a>
+                    <a href="#part2">2</a>
+                    <a href="#part3">3</a>
+                    <a href="#part4">4</a>
+                    <a style="margin-right:100px;" href="#part5">5</a>
+                    <button title="关闭附页" onclick="close_third()" style="margin-right:3px; border-bottom-left-radius:6px;border-top-left-radius:6px;border-bottom-right-radius:6px;border-top-right-radius:6px;background-color: #6495ED;float: right" id="btn3">
+                        x
+                    </button>
+                    <button title="打开附页" onclick="open_third()" style="margin-right:3px; border-bottom-left-radius:6px;border-top-left-radius:6px;border-bottom-right-radius:6px;border-top-right-radius:6px;background-color: #B0C4DE;float: right" id="btn3">
+                        ^
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="part3" style="background:url(demo/source/image/lol1.jpg);background-size: 100%; background-repeat:no-repeat;height:800px;background-color: white;">
+            <div class="row" style="margin-top:32px;height:700px;cursor: default;font-size: 20px">
+                <div class="col-md-3 " style="color:#FF7F50;text-align:center;height:30px;background-color: black;">
+                    <a style="margin-left:-980px;" href="#part1">1</a>
+                    <a href="#part2">2</a>
+                    <a href="#part3">3</a>
+                    <a href="#part4">4</a>
+                    <a style="margin-right:100px;" href="#part5">5</a>
+                    有光的地方，黑暗如影随形～
+                </div>
+                <div id="fourth_page" class="col-md-3" style=" opacity: 0.5;height:90px;font-size: 20px;">
+                    <div style="width: 210px;float: left;">
+                        <a target="_blank" href="http://www.jingjianpengda.com/products/info?id=92">电烤架</a>
+                    </div>
+                    <div style="width: 210px;float: left;">
+                        <a target="_blank" href="https://item.jd.com/54679558540.html">水晶象棋</a>
+                    </div>
+                    <div style="width: 210px;float: left;">
+                        <a target="_blank" href="http://www.slieny.com/plus/view.php?aid=188633">春物游戏</a>
+                    </div>
+                    <div style="width: 210px;float: left;">
+                        <a target="_blank" href="http://www.heishenhua.com/">黑神话</a>
+                    </div>
+                    
+                    <div style=" width: 100px;float: right;font-size: 25px;color: red">
+                        愿望清单
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="part4" style="background:url(demo/source/image/刀剑17.png);background-size: 100%; background-repeat:no-repeat;height:800px;background-color: white;">
+        </div>
+        <div class="row" id="part5" style="background:url(demo/source/image/nature1.jpg);background-size: 100%; background-repeat:no-repeat;height:800px;background-color: white;">
+        </div>
+        <script>
+        var video = document.getElementById('video');
+        video.playbackRate = 0.75;
+        </script>
+        <script type="text/javascript">
+        var myAudio = new Audio();
+        let allMusic = [{
+                    'MusicSrc': 'demo/source/music/0.mp3'
+                },
+                {
+                    'MusicSrc': 'demo/source/music/1.mp3'
+                },
+                {
+                    'MusicSrc': 'demo/source/music/2.mp3'
+                },
+                {
+                    'MusicSrc': 'demo/source/music/3.mp3'
+                },
+                {
+                    'MusicSrc': 'demo/source/music/4.mp3'
+                },
+                {
+                    'MusicSrc': 'demo/source/music/5.mp3'
+                },
+                {
+                    'MusicSrc': 'demo/source/music/6.mp3'
+                },
+                {
+                    'MusicSrc': 'demo/source/music/7.mp3'
+                },
+                {
+                    'MusicSrc': 'demo/source/music/8.mp3'
+                },
+                {
+                    'MusicSrc': 'demo/source/music/9.mp3'
+                },
+                {
+                    'MusicSrc': 'demo/source/music/10.mp3'
+                },
+                {
+                    'MusicSrc': 'demo/source/music/11.mp3'
+                },
+                {
+                    'MusicSrc': 'demo/source/music/12.mp3'
+                }
+            ],
+            Index = 0;
+        myAudio.src = allMusic[Index].MusicSrc;
+
+
+
+
+
+
+
+        function switch_video() {
+            var a = 10 * Math.random();
+            var num = Math.floor(a);
+            //alert(num);
+            if (num == 0 || num == 9) {
+                document.getElementById("video").src = "demo/source/video/加藤惠.mp4";
+            } else if (num == 1 || num == 2) {
+                document.getElementById("video").src = "demo/source/video/孤狼.mp4";
+            } else if (num == 3 || num == 4) {
+                document.getElementById("video").src = "demo/source/video/雨天2.mp4";
+            } else if (num == 6 || num == 5) {
+                document.getElementById("video").src = "demo/source/video/雨天1.mp4";
+            } else if (num == 7 || num == 8) {
+                document.getElementById("video").src = "demo/source/video/龙猫山洞.mp4";
+            } else {
+                alert("哇!金色普通");
+            }
+
+        }
+
+
+
+
+        start.onclick = function() {
+            myAudio.play();
+        };
+        pause.onclick = function() {
+            myAudio.pause();
+        };
+        started.onclick = function() {
+            myAudio.play();
+        };
+        next.onclick = function() {
+            Index++;
+            myAudio.src = allMusic[Index].MusicSrc;
+            myAudio.currentTime = 0;
+            myAudio.play();
+        }
+        random.onclick = function() {
+            Index = Math.floor(Math.random() * 10 + 4)
+            myAudio.src = allMusic[Index].MusicSrc;
+            myAudio.currentTime = 0;
+            myAudio.play();
+        }
+        previous.onclick = function() {
+            Index--;
+            myAudio.src = allMusic[Index].MusicSrc;
+            myAudio.currentTime = 0;
+            myAudio.play();
+        }
+        silence.onclick = function() {
+
+            myAudio.volume = '0';
+            this.className = "volume";
+        }
+
+        bgchange1.onclick = function() {
+            document.getElementById("part1").style.backgroundImage = "url(demo/source/image/刀剑8.png)";
+        }
+        bgchange2.onclick = function() {
+            document.getElementById("part1").style.backgroundImage = "url(demo/source/image/green2.jpg)";
+        }
+        bgchange3.onclick = function() {
+            document.getElementById("part1").style.backgroundImage = "url(demo/source/image/刀剑16.jpg)";
+        }
+        bgchange4.onclick = function() {
+            document.getElementById("part1").style.backgroundImage = "url(demo/source/image/lol_kayle.jpg)";
+        }
+        bgchange5.onclick = function() {
+            document.getElementById("part1").style.backgroundImage = "url(demo/source/image/刀剑12.png)";
+        }
+        bgchange6.onclick = function() {
+            document.getElementById("part1").style.backgroundImage = "url(demo/source/image/超炮4.jpg)";
+        }
+        bgchange7.onclick = function() {
+            document.getElementById("part1").style.backgroundImage = "url(demo/source/image/test2.gif)";
+        }
+        bgchange8.onclick = function() {
+            document.getElementById("part1").style.backgroundImage = "url(demo/source/image/刀剑17.png)";
+        }
+        bgchange9.onclick = function() {
+            document.getElementById("part1").style.backgroundImage = "url(demo/source/image/bg.jpeg)";
+        }
+        /*返回音频总长度*/
+        myAudio.addEventListener('canplay', function() {
+            duration.innerHTML = Math.ceil(myAudio.duration);
+            console.log(myAudio.currentSrc)
+        });
+        //设置初始播放时间
+        //myAudio.currentTime='260';
+        //音频设置和返回
+        setInterval(function() {
+            //播放初始时间跳动，单位为秒；
+            current.innerHTML = Math.ceil(myAudio.currentTime);
+        }, 100);
+        //音量控制设置 ,赋值0到1
+        myAudio.volume = '0.2';
+        //currentSrc
+        myAudio.addEventListener('ended', function() {
+            console.log('音频播放结束！');
+            console.log(myAudio.ended);
+        });
+        //loop
+        //myAudio.loop = true;
+        //播放速度,赋值代表倍数
+        myAudio.playbackRate = '1';
+        console.log(myAudio.playbackRate);
+        //两倍数
+        double.onclick = function() {
+            myAudio.playbackRate = '2';
+            console.log(myAudio.playbackRate);
+        }
+        //timeupdate
+        myAudio.addEventListener('timeupdate', function() {
+            console.log('正在播放中！');
+        });
+        //voice change 监督
+        myAudio.addEventListener('volumechange', function() {
+            console.log('声音大小被改变了');
+        });
+        //全屏
+        //btnScreen.onclick = function(){
+        //myAudio.webkitRequestFullScreen();
+        //}
+        //重加载
+        //btnReload.onclick = function(){
+        //myAudio.load();
+        //myAudio.play();
+        //}
+        </script>
+        <!--侧边栏js如下-->
+        <script type="text/javascript">
+        var status = 1
+
+        function toggle() {
+            if (status == 1) {
+                document.getElementById("aside1").style.display = "list-item";
+                document.getElementById("aside2").style.display = "list-item";
+                status = 2;
+            } else if (status == 2) {
+                document.getElementById("aside1").style.display = "none";
+                document.getElementById("aside2").style.display = "none";
+                status = 1;
+            }
+
+
+        }
+
+        function sakura() {
+            window.location.href = "file:///Users/zhangtingjia/Desktop/demo/%E6%A8%B1%E8%8A%B1%E7%89%B9%E6%95%88/demo.html";
+        }
+
+        function hot() {
+            if (status == 1) {
+                document.getElementById("iframe1").style.display = "list-item";
+                status = 2;
+            } else if (status == 2) {
+                document.getElementById("iframe1").style.display = "none";
+                status = 1;
+            }
+        }
+
+        function clean() {
+
+            if (status == 2) {
+                document.getElementById("first_page").style.display = "list-item";
+                document.getElementById("second_page").style.display = "list-item";
+                document.getElementById("third_page").style.display = "list-item";
+                document.getElementById("fourth_page").style.display = "list-item";
+                document.getElementById("fifth_page").style.display = "list-item";
+                document.getElementById("sixth_page").style.display = "list-item";
+                document.getElementById("seventh_page").style.display = "list-item";
+                document.getElementById("eighth_page").style.display = "list-item";
+                document.getElementById("nineth_page").style.display = "list-item";
+                document.getElementById("tenth_page").style.opacity = "0.9";
+                document.getElementById("eleventh_page").style.opacity = "0.9";
+                status = 1;
+            } else if (status == 1) {
+                document.getElementById("first_page").style.display = "none";
+                document.getElementById("second_page").style.display = "none";
+                document.getElementById("third_page").style.display = "none";
+                document.getElementById("fourth_page").style.display = "none";
+                document.getElementById("fifth_page").style.display = "none";
+                document.getElementById("sixth_page").style.display = "none";
+                document.getElementById("seventh_page").style.display = "none";
+                document.getElementById("eighth_page").style.display = "none";
+                document.getElementById("nineth_page").style.display = "none";
+                document.getElementById("tenth_page").style.opacity = "0.1";
+                document.getElementById("eleventh_page").style.opacity = "0.1";
+                status = 2;
+            }
+
+        }
+
+        function close_second() {
+            document.getElementById("part2").style.display = "none";
+        }
+
+        function open_second() {
+            document.getElementById("part2").style.display = "list-item";
+        }
+
+        function open_third() {
+            document.getElementById("part3").style.display = "list-item";
+        }
+
+        function close_third() {
+            document.getElementById("part3").style.display = "none";
+        }
+
+        function closer() {
+            document.getElementById("aside1").style.display = "none";
+            status = 1;
+            document.getElementById("aside2").style.display = "none";
+            status = 1;
+        }
+
+        function closer_first_page() {
+            document.getElementById("aside01").style.display = "none";
+            status = 1;
+            document.getElementById("aside02").style.display = "none";
+            status = 1;
+            document.getElementById("aside03").style.display = "none";
+            status = 1;
+            document.getElementById("show_first").style.display = "list-item";
+
+
+        }
+
+
+
+        function show_first_page() {
+            if (status == 1) {
+                document.getElementById("aside01").style.display = "list-item";
+                document.getElementById("aside02").style.display = "list-item";
+                document.getElementById("aside03").style.display = "list-item";
+                document.getElementById("show_first").style.display = "none";
+                status = 2;
+            } else if (status == 2) {
+                document.getElementById("aside01").style.display = "none";
+                document.getElementById("aside02").style.display = "none";
+                document.getElementById("aside03").style.display = "none";
+                status = 1;
+            }
+        }
+
+        function close04() {
+            document.getElementById("aside04").style.display = "none";
+        }
+
+        function countdown() {
+            var starttime = document.getElementById("countdown").innerText;
+            var endtime = document.getElementById("countdown").innerText;
+            if (starttime == 0) {
+
+                return;
+            }
+            if (endtime == 0) {
+                var a = new Date();
+                var x = "现在时间：" + a + "午时已到！";
+                alert(x);
+            }
+            setTimeout("countdown()", 1000);
+            starttime--;
+            document.getElementById("countdown").innerText = starttime;
+        }
+
+        function count() {
+            var starttime = document.getElementById("count").innerText;
+
+            if (starttime == 3600) {
+                var a = new Date();
+                var x = "现在时间：" + a + "都一个小时了！";
+                alert(x);
+            }
+            if (starttime == 7200) {
+                var a = new Date();
+                var x = "现在时间：" + a + "都两个小时了！";
+                alert(x);
+            }
+            setTimeout("count()", 1000);
+            starttime++;
+            document.getElementById("count").innerText = starttime;
+        }
+
+        function baidu() {
+            document.getElementById("aside05").style.display = "list-item";
+        }
+        </script>
+</body>
+
+</html>
