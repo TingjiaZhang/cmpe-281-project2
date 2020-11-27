@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+	<!-- Javascript SDKs-->
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script> 
+	<script src="js/amazon-cognito-auth.min.js"></script>
+	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script> 
+	<script src="js/amazon-cognito-identity.min.js"></script>   
+	<script src="js/config.js"></script>
+
+  </head>
+  <body>
+     <div class="row" id="part0" style="background:url(/Users/zhangtingjia/Desktop/cmpe281final/image/green2.jpg );background-size: 100%; background-repeat:no-repeat;height:800px;background-color: white;">
+
+      <h1>Please sign in</h1>
+      <form style="margin-left: 25%;margin-right: 25%;margin-top: 100px">
+      <div title="input ur emaill address as the account"style="color:red">
+      <input type="text" id="inputUsername"  placeholder="Email address" name="username" required autofocus>
+      *
+      </div>
+      <br>
+      <div title="input ur passward"style="color:red">
+      <input type="password" id="inputPassword"  placeholder="Password" name="password" required>   
+      * 
+      </div>
+      <br>
+      <button type="button" onclick="signInButton()">Sign in</button>
+      <a href="https://s3.us-east-2.amazonaws.com/assignment4.com/cmpe281final/cmpe281final_regiest.html"title="go to sign up page">have no account?</a>
+    </form>
+</div>
+
+<script>
+
+  function signInButton() {
+    
+	var authenticationData = {
+        Username : document.getElementById("inputUsername").value,
+        Password : document.getElementById("inputPassword").value,
+    };
+	
+    var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData);
+    
+	var poolData = {
+        UserPoolId : _config.cognito.userPoolId, // Your user pool id here
+        ClientId : _config.cognito.clientId, // Your client id here
+    };
+	
+    var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+	
+    var userData = {
+        Username : document.getElementById("inputUsername").value,
+        Pool : userPool,
+    };
+	
+    var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+    
+	cognitoUser.authenticateUser(authenticationDetails, {
+        onSuccess: function (result) {
+			    //var accessToken = result.getAccessToken().getJwtToken();
+			    //console.log(accessToken);	
+          window.location.href="https://s3.us-east-2.amazonaws.com/assignment4.com/home.html";
+        },
+//https://s3.us-east-2.amazonaws.com/assignment4.com/tingjia.html
+//http://assignment4.com.s3-website.us-east-2.amazonaws.com/
+        onFailure: function(err) {
+          
+            alert(err.message || JSON.stringify(err));
+        },
+    });
+  }
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
